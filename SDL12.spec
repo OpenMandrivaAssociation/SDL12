@@ -1,7 +1,7 @@
 %define	fname	SDL
 %define	name	SDL12
 %define	version	1.2.11
-%define rel	7
+%define rel	8
 %define	lib_name_orig	lib%{fname}
 %define	lib_major	1.2
 %define	lib_name	%mklibname %{fname} %{lib_major}
@@ -76,7 +76,7 @@ BuildRequires:	nasm
 BuildRequires:	libtool-devel
 %endif
 %if %{build_directfb}
-BuildRequires:	DirectFB-devel
+BuildRequires:	DirectFB-devel >= 1.0.0
 %endif
 %if %{build_ggi}
 BuildRequires:	libggi-devel
