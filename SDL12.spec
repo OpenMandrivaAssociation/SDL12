@@ -1,7 +1,7 @@
 %define	fname	SDL
 %define	name	SDL12
-%define	version	1.2.11
-%define rel	8
+%define	version	1.2.12
+%define rel	1
 %define	lib_name_orig	lib%{fname}
 %define	lib_major	1.2
 %define	lib_name	%mklibname %{fname} %{lib_major}
@@ -166,14 +166,14 @@ applications which will use %{name}.
 %patch41 -p1 -b .nasm_include
 #%patch42 -p1 -b .ppc_vidmode
 #%patch43 -p1 -b .relibtoolize
-%patch44 -p1 -b .nas_detection
+#patch44 -p1 -b .nas_detection
 %patch50 -p1 -b .byteorder
-%patch51 -p1 -b .alsa
-%patch52 -p1 -b .pagesize
+#patch51 -p1 -b .alsa
+#patch52 -p1 -b .pagesize
 %patch3 -p1 -b .libtoolize
-%patch53 -p1 -b .no_yasm
+#patch53 -p1 -b .no_yasm
 %patch54 -p1 -b .no_lpthread
-%patch55 -p0 -b .supermount
+#patch55 -p0 -b .supermount
 
 %build
 export CFLAGS="$RPM_OPT_FLAGS -fPIC -O3"
