@@ -53,8 +53,8 @@ Patch41:	SDL-1.2.10-nasm-include.patch
 #Patch43:	SDL-1.2.10-relibtoolize.patch.bz2
 Patch44:	SDL-1.2.10-fix-nas-detection.patch
 Patch50:	SDL-1.2.10-byteorder.patch
-Patch51:	SDL-1.2.10-preferalsa.patch
-Patch52:	SDL-1.2.10-pagesize.patch
+Patch51:	SDL-1.2.12-preferalsa.patch
+Patch52:	SDL-1.2.12-pagesize.patch
 Patch53:	SDL-1.2.11-no-yasm.patch
 Patch54:	SDL-1.2.11-dont-propagate-lpthread.patch
 Patch55:	SDL-1.2.11-supermount-double-free-issue.patch
@@ -168,8 +168,8 @@ applications which will use %{name}.
 #%patch43 -p1 -b .relibtoolize
 #patch44 -p1 -b .nas_detection
 %patch50 -p1 -b .byteorder
-#patch51 -p1 -b .alsa
-#patch52 -p1 -b .pagesize
+%patch51 -p1 -b .alsa
+%patch52 -p1 -b .pagesize
 %patch3 -p1 -b .libtoolize
 #patch53 -p1 -b .no_yasm
 %patch54 -p1 -b .no_lpthread
