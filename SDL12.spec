@@ -61,7 +61,6 @@ Patch55:	SDL-1.2.11-supermount-double-free-issue.patch
 License:	LGPL
 Group:		System/Libraries
 URL:		http://www.libsdl.org/
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	arts-devel
 BuildRequires:	automake1.9
 # libGL is required to enable glx support
