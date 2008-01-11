@@ -1,6 +1,6 @@
 %define	fname	SDL
 %define	name	SDL12
-%define	version	1.2.12
+%define	version	1.2.13
 %define rel	1
 %define	lib_name_orig	lib%{fname}
 %define	lib_major	1.2
@@ -69,6 +69,7 @@ BuildRequires:	libmesaglu-devel
 BuildRequires:	esound-devel
 BuildRequires:	nas-devel
 BuildRequires:	chrpath
+BuildRequires:	libpulseaudio-devel
 %ifarch %{ix86}
 BuildRequires:	nasm
 %endif
