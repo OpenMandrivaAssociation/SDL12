@@ -3,8 +3,10 @@
 %define	version	1.2.13
 %define rel	1
 %define	lib_name_orig	lib%{fname}
-%define	lib_major	1.2
-%define	lib_name	%mklibname %{fname} %{lib_major}
+%define apiver 1.2
+%define	major 0
+%define	libname	%mklibname %{fname} %{apiver} %{major}
+%define develname %mklibname %{fname} -d
 
 %if %{mdkversion} >= 1010
 %define build_plugins	0
@@ -22,6 +24,9 @@ Summary:	Simple DirectMedia Layer
 Name:		%{name}
 Version:	%{version}
 Release:	%mkrel %{rel}
+License:	LGPLv2+
+Group:		System/Libraries
+URL:		http://www.libsdl.org/
 Source0:	http://www.libsdl.org/release/%{fname}-%{version}.tar.gz
 Patch0:		SDL-1.2.10-fixrpath.patch
 Patch1:		SDL-1.2.10-libtool.patch
@@ -37,10 +42,6 @@ Patch51:	SDL-1.2.13-preferalsa.patch
 Patch52:	SDL-1.2.12-pagesize.patch
 Patch53:	SDL-1.2.12-disable_yasm.patch
 Patch54:	SDL-1.2.11-dont-propagate-lpthread.patch
-License:	LGPL
-Group:		System/Libraries
-URL:		http://www.libsdl.org/
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	arts-devel
 # libGL is required to enable glx support
 BuildRequires:	libmesaglu-devel
@@ -63,57 +64,63 @@ BuildRequires:	libggi-devel
 %if %{build_aalib}
 BuildRequires:	aalib-devel
 %endif
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 This is the Simple DirectMedia Layer, a generic API that provides low level
 access to audio, keyboard, mouse, and display framebuffer across multiple
 platforms.
 
-%package -n	%{lib_name}-video-ggi
+%package -n %{libname}-video-ggi
 Summary:	GGI video support for SDL
 Group:		System/Libraries
-Requires:	%{lib_name} = %{version}-%{release}
+Requires:	%{libname} = %{version}-%{release}
 
-%description -n	%{lib_name}-video-ggi
+%description -n %{libname}-video-ggi
 This is the Simple DirectMedia Layer, a generic API that provides low level
 access to audio, keyboard, mouse, and display framebuffer across multiple
 platforms.
 
 This package provides GGI video support as a plugin to SDL.
 
-%package -n	%{lib_name}-video-directfb
+%package -n %{libname}-video-directfb
 Summary:	DirectFB video support for SDL
 Group:		System/Libraries
-Requires:	%{lib_name} = %{version}-%{release}
+Requires:	%{libname} = %{version}-%{release}
 
-%description -n	%{lib_name}-video-directfb
+%description -n %{libname}-video-directfb
 This is the Simple DirectMedia Layer, a generic API that provides low level
 access to audio, keyboard, mouse, and display framebuffer across multiple
 platforms.
 
 This package provides DirectFB video support as a plugin to SDL.
 
-%package -n	%{lib_name}
+%package -n %{libname}
 Summary:	Main library for %{name}
 Group:		System/Libraries
 Provides:	%{name} = %{version}-%{release}
 Provides:	%{lib_name_orig} = %{version}-%{release}
 Obsoletes:	SDL
 Provides:	SDL
+Obsoletes:	%mklibname SDL 1.2
+Provides:	%mklibname SDL 1.2
 
-%description -n	%{lib_name}
+%description -n %{libname}
 This package contains the library needed to run programs dynamically
 linked with %{name}.
 
-%package -n	%{lib_name}-devel
+%package -n %{develname}
 Summary:	Headers for developing programs that will use %{name}
 Group:		Development/C
-Requires:	%{lib_name} = %{version} libalsa-devel >= 0.9.0
+Requires:	%{libname} = %{version}
+Requires:	libalsa-devel >= 0.9.0
 Provides:	%{lib_name_orig}-devel = %{version}-%{release}
-Provides:	SDL-devel, SDL%{lib_major}-devel
-Obsoletes:	SDL-devel
+Provides:	SDL-devel
+Provides:	SDL%{apiver}-devel
+Obsoletes:	%mklibname SDL 1.2 -d
+Provides:	%mklibname SDL 1.2 -d
 
-%description -n	%{lib_name}-devel
+%description -n %{develname}
 This package contains the headers that programmers will need to develop
 applications which will use %{name}.
 
@@ -180,51 +187,52 @@ export CXXFLAGS="%{optflags} -fPIC -O3"
 %make
 
 %install
-rm -rf $RPM_BUILD_ROOT
-%makeinstall
+rm -rf %{buildroot}
+%makeinstall_std
 
 # remove unpackaged files
 %if %{build_plugins}
-rm -f $RPM_BUILD_ROOT%{_libdir}/SDL/*.a
+rm -f %{buildroot}%{_libdir}/SDL/*.a
 %endif
 
 # --disable-rpath does not seem to work correctly
 chrpath -d %{buildroot}%{_libdir}/libSDL.so
 
 #multiarch
-%multiarch_binaries $RPM_BUILD_ROOT%{_bindir}/sdl-config
+%multiarch_binaries %{buildroot}%{_bindir}/sdl-config
 
-%post -n %{lib_name} -p /sbin/ldconfig
-%postun -n %{lib_name} -p /sbin/ldconfig
+%post -n %{libname} -p /sbin/ldconfig
+%postun -n %{libname} -p /sbin/ldconfig
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
-%files -n %{lib_name}
+%files -n %{libname}
 %defattr(-,root,root)
-%doc README-SDL.txt COPYING CREDITS BUGS
-%{_libdir}/libSDL-%{lib_major}.so.*
+%doc README-SDL.txt CREDITS BUGS
+%{_libdir}/libSDL-%{apiver}.so.%{major}*
 %if %{build_plugins}
 %dir %{_libdir}/SDL
 %endif
 
 %if %{build_plugins}
+
 %if %{build_ggi}
-%files -n %{lib_name}-video-ggi
+%files -n %{libname}-video-ggi
 %defattr(-,root,root)
 %{_libdir}/SDL/video_ggi.*
 %endif
 
 %if %{build_directfb}
-%files -n %{lib_name}-video-directfb
+%files -n %{libname}-video-directfb
 %defattr(-,root,root)
 %{_libdir}/SDL/video_directfb.*
 %endif
 %endif
 
-%files -n %{lib_name}-devel
+%files -n %{develname}
 %defattr(-,root,root)
-%doc README README-SDL.txt COPYING CREDITS BUGS WhatsNew docs.html
+%doc README README-SDL.txt CREDITS BUGS WhatsNew docs.html
 %doc docs/html/*.html
 %{_bindir}/sdl-config
 %multiarch %{multiarch_bindir}/sdl-config
@@ -235,5 +243,3 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/SDL/*.h
 %{_datadir}/aclocal/*
 %{_mandir}/*/*
-
-
