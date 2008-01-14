@@ -1,7 +1,7 @@
 %define	fname	SDL
 %define	name	SDL12
 %define	version	1.2.13
-%define rel	1
+%define rel	2
 %define	lib_name_orig	lib%{fname}
 %define apiver 1.2
 %define	major 0
@@ -38,7 +38,7 @@ Patch38:	SDL-1.2.9-missing-mmx-blit.patch
 Patch39:	SDL-1.2.10-propagate-pic-to-nasm.patch
 Patch41:	SDL-1.2.10-nasm-include.patch
 Patch50:	SDL-1.2.10-byteorder.patch
-Patch51:	SDL-1.2.13-preferalsa.patch
+Patch51:	SDL-1.2.13-preferpulsealsa.patch
 Patch52:	SDL-1.2.12-pagesize.patch
 Patch53:	SDL-1.2.12-disable_yasm.patch
 Patch54:	SDL-1.2.11-dont-propagate-lpthread.patch
