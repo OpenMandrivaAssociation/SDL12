@@ -1,7 +1,7 @@
 %define	fname	SDL
 %define	name	SDL12
 %define	version	1.2.13
-%define rel	2
+%define rel	3
 %define	lib_name_orig	lib%{fname}
 %define apiver 1.2
 %define	major 0
@@ -114,6 +114,9 @@ Summary:	Headers for developing programs that will use %{name}
 Group:		Development/C
 Requires:	%{libname} = %{version}
 Requires:	libalsa-devel >= 0.9.0
+# GL/GLU referenced in headers, but is dlopened so there are no autodeps:
+Requires:	mesagl-devel
+Requires:	mesaglu-devel
 Provides:	%{lib_name_orig}-devel = %{version}-%{release}
 Provides:	SDL-devel
 Provides:	SDL%{apiver}-devel
