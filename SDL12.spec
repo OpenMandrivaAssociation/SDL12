@@ -1,7 +1,7 @@
 %define	fname	SDL
 %define	name	SDL12
 %define	version	1.2.13
-%define rel	3
+%define rel	4
 %define	lib_name_orig	lib%{fname}
 %define apiver 1.2
 %define	major 0
@@ -42,6 +42,8 @@ Patch51:	SDL-1.2.13-preferpulsealsa.patch
 Patch52:	SDL-1.2.12-pagesize.patch
 Patch53:	SDL-1.2.12-disable_yasm.patch
 Patch54:	SDL-1.2.11-dont-propagate-lpthread.patch
+# (fc) 1.2.13-4mdv fix pulseaudio shared support
+Patch55:	SDL-1.2.13-pulseaudio-shared.patch
 BuildRequires:	arts-devel
 # libGL is required to enable glx support
 BuildRequires:	libmesaglu-devel
@@ -143,6 +145,7 @@ applications which will use %{name}.
 %patch52 -p1 -b .pagesize
 %patch53 -p1 -b .no_yasm
 %patch54 -p1 -b .no_lpthread
+%patch55 -p1 -b .pulseaudio-shared
 
 %build
 ./autogen.sh
@@ -183,8 +186,10 @@ export CXXFLAGS="%{optflags} -fPIC -O3"
 		--enable-esd \
 		--enable-esd-shared \
 		--enable-nas \
+		--enable-pulseaudio \
 		--enable-pulseaudio-shared \
 		--enable-alsa \
+		--enable-alsa-shared \
 		--program-prefix= \
 		--disable-rpath
 %make
