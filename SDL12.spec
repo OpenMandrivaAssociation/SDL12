@@ -1,7 +1,7 @@
 %define	fname	SDL
 %define	name	SDL12
 %define	version	1.2.13
-%define rel	5
+%define rel	6
 %define	lib_name_orig	lib%{fname}
 %define apiver 1.2
 %define	major 0
@@ -44,8 +44,8 @@ Patch53:	SDL-1.2.12-disable_yasm.patch
 Patch54:	SDL-1.2.11-dont-propagate-lpthread.patch
 # (fc) 1.2.13-4mdv fix pulseaudio shared support
 Patch55:	SDL-1.2.13-pulseaudio-shared.patch
-# (cg) 1.2.13-5mdv use default buffering for pulse
-Patch56:	SDL-1.2.13-pulseaudio-default-buffering.patch
+# (cg) 1.2.13-5mdv use tweaked buffering for pulse (#37235)
+Patch56:	SDL-1.2.13-pulseaudio-buffering.patch
 BuildRequires:	arts-devel
 # libGL is required to enable glx support
 BuildRequires:	libmesaglu-devel
@@ -148,7 +148,7 @@ applications which will use %{name}.
 %patch53 -p1 -b .no_yasm
 %patch54 -p1 -b .no_lpthread
 %patch55 -p1 -b .pulseaudio-shared
-%patch56 -p1 -b .pulseaudio-default-buffering
+%patch56 -p1 -b .pulseaudio-buffering
 
 %build
 ./autogen.sh
