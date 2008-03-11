@@ -1,7 +1,7 @@
 %define	fname	SDL
 %define	name	SDL12
 %define	version	1.2.13
-%define rel	6
+%define rel	7
 %define	lib_name_orig	lib%{fname}
 %define apiver 1.2
 %define	major 0
@@ -46,6 +46,8 @@ Patch54:	SDL-1.2.11-dont-propagate-lpthread.patch
 Patch55:	SDL-1.2.13-pulseaudio-shared.patch
 # (cg) 1.2.13-5mdv use tweaked buffering for pulse (#37235)
 Patch56:	SDL-1.2.13-pulseaudio-buffering.patch
+# (fc) 1.2.13-7mdv fix crash in pulseaudio backend when /proc is not mounted (Mdv bug #38220)
+Patch57:	SDL-1.2.13-noproc.patch
 BuildRequires:	arts-devel
 # libGL is required to enable glx support
 BuildRequires:	libmesaglu-devel
@@ -149,6 +151,7 @@ applications which will use %{name}.
 %patch54 -p1 -b .no_lpthread
 %patch55 -p1 -b .pulseaudio-shared
 %patch56 -p1 -b .pulseaudio-buffering
+%patch57 -p1 -b .noproc
 
 %build
 ./autogen.sh
