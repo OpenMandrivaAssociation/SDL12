@@ -1,7 +1,7 @@
 %define	fname	SDL
 %define	name	SDL12
 %define	version	1.2.13
-%define rel	7
+%define rel	8
 %define	lib_name_orig	lib%{fname}
 %define apiver 1.2
 %define	major 0
@@ -145,7 +145,7 @@ applications which will use %{name}.
 %patch39 -p1 -b .nasm_pic
 %patch41 -p1 -b .nasm_include
 %patch50 -p1 -b .byteorder
-%patch51 -p1 -b .alsa
+%patch51 -p1 -b .preferpulsealsa
 %patch52 -p1 -b .pagesize
 %patch53 -p1 -b .no_yasm
 %patch54 -p1 -b .no_lpthread
