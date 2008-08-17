@@ -1,7 +1,7 @@
 %define	fname	SDL
 %define	name	SDL12
 %define	version	1.2.13
-%define rel	8
+%define rel	9
 %define	lib_name_orig	lib%{fname}
 %define apiver 1.2
 %define	major 0
