@@ -1,7 +1,7 @@
 %define	fname	SDL
 %define	name	SDL12
 %define	version	1.2.13
-%define rel	9
+%define rel	10
 %define	lib_name_orig	lib%{fname}
 %define apiver 1.2
 %define	major 0
@@ -38,13 +38,14 @@ Patch38:	SDL-1.2.9-missing-mmx-blit.patch
 Patch39:	SDL-1.2.10-propagate-pic-to-nasm.patch
 Patch41:	SDL-1.2.10-nasm-include.patch
 Patch50:	SDL-1.2.10-byteorder.patch
-Patch51:	SDL-1.2.13-preferpulsealsa.patch
+# (cg) 1.2.13-10mdv Use pulse output by default
+Patch51:	SDL-1.2.13-preferpulse.patch
 Patch52:	SDL-1.2.12-pagesize.patch
 Patch53:	SDL-1.2.12-disable_yasm.patch
 Patch54:	SDL-1.2.11-dont-propagate-lpthread.patch
 # (fc) 1.2.13-4mdv fix pulseaudio shared support
 Patch55:	SDL-1.2.13-pulseaudio-shared.patch
-# (cg) 1.2.13-5mdv use tweaked buffering for pulse (#37235)
+# (cg) 1.2.13-10mdv Use upstream pulse buffering patch
 Patch56:	SDL-1.2.13-pulseaudio-buffering.patch
 # (fc) 1.2.13-7mdv fix crash in pulseaudio backend when /proc is not mounted (Mdv bug #38220)
 Patch57:	SDL-1.2.13-noproc.patch
@@ -77,6 +78,9 @@ This is the Simple DirectMedia Layer, a generic API that provides low level
 access to audio, keyboard, mouse, and display framebuffer across multiple
 platforms.
 
+%if %{build_plugins}
+
+%if %{build_ggi}
 %package -n %{libname}-video-ggi
 Summary:	GGI video support for SDL
 Group:		System/Libraries
@@ -88,7 +92,9 @@ access to audio, keyboard, mouse, and display framebuffer across multiple
 platforms.
 
 This package provides GGI video support as a plugin to SDL.
+%endif
 
+%if %{build_directfb}
 %package -n %{libname}-video-directfb
 Summary:	DirectFB video support for SDL
 Group:		System/Libraries
@@ -100,6 +106,9 @@ access to audio, keyboard, mouse, and display framebuffer across multiple
 platforms.
 
 This package provides DirectFB video support as a plugin to SDL.
+%endif
+
+%endif
 
 %package -n %{libname}
 Summary:	Main library for %{name}
@@ -246,6 +255,7 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %{_libdir}/SDL/video_directfb.*
 %endif
+
 %endif
 
 %files -n %{develname}
