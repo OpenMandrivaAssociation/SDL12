@@ -49,7 +49,6 @@ Patch55:	SDL-1.2.13-pulseaudio-shared.patch
 Patch56:	SDL-1.2.13-pulseaudio-buffering.patch
 # (fc) 1.2.13-7mdv fix crash in pulseaudio backend when /proc is not mounted (Mdv bug #38220)
 Patch57:	SDL-1.2.13-noproc.patch
-BuildRequires:	arts-devel
 # libGL is required to enable glx support
 BuildRequires:	libmesaglu-devel
 BuildRequires:	esound-devel
