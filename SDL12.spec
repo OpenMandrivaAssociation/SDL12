@@ -195,8 +195,6 @@ export CXXFLAGS="%{optflags} -fPIC -O3"
 		--disable-debug \
 		--enable-dlopen \
 		--enable-sdl-dlopen \
-		--enable-arts \
-		--enable-arts-shared \
 		--enable-esd \
 		--enable-esd-shared \
 		--enable-nas \
