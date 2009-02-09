@@ -1,7 +1,7 @@
 %define	fname	SDL
 %define	name	SDL12
 %define	version	1.2.13
-%define rel	10
+%define rel	11
 %define	lib_name_orig	lib%{fname}
 %define apiver 1.2
 %define	major 0
@@ -150,7 +150,7 @@ applications which will use %{name}.
 %patch21 -p1 -b .enums
 %patch31 -p1 -b .lock
 %patch38 -p1 -b .mmx_blit
-%patch39 -p1 -b .nasm_pic
+%patch39 -p0 -b .nasm_pic
 %patch41 -p1 -b .nasm_include
 %patch50 -p1 -b .byteorder
 %patch51 -p1 -b .preferpulsealsa
@@ -202,6 +202,7 @@ export CXXFLAGS="%{optflags} -fPIC -O3"
 		--enable-pulseaudio-shared \
 		--enable-alsa \
 		--enable-alsa-shared \
+        --disable-arts \
 		--program-prefix= \
 		--disable-rpath
 %make
