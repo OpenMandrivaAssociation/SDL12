@@ -1,7 +1,7 @@
 %define	fname	SDL
 %define	name	SDL12
 %define	version	1.2.13
-%define rel	11
+%define rel	12
 %define	lib_name_orig	lib%{fname}
 %define apiver 1.2
 %define	major 0
@@ -41,7 +41,6 @@ Patch50:	SDL-1.2.10-byteorder.patch
 # (cg) 1.2.13-10mdv Use pulse output by default
 Patch51:	SDL-1.2.13-preferpulse.patch
 Patch52:	SDL-1.2.12-pagesize.patch
-Patch53:	SDL-1.2.12-disable_yasm.patch
 Patch54:	SDL-1.2.11-dont-propagate-lpthread.patch
 # (fc) 1.2.13-4mdv fix pulseaudio shared support
 Patch55:	SDL-1.2.13-pulseaudio-shared.patch
@@ -55,8 +54,10 @@ BuildRequires:	esound-devel
 BuildRequires:	nas-devel
 BuildRequires:	chrpath
 BuildRequires:	libpulseaudio-devel
+BuildRequires:	libalsa-devel
+Buildrequires:	libxrandr-devel
 %ifarch %{ix86}
-BuildRequires:	nasm
+BuildRequires:	yasm
 %endif
 %if %{build_plugins}
 BuildRequires:	libtool-devel
@@ -155,7 +156,6 @@ applications which will use %{name}.
 %patch50 -p1 -b .byteorder
 %patch51 -p1 -b .preferpulsealsa
 %patch52 -p1 -b .pagesize
-%patch53 -p1 -b .no_yasm
 %patch54 -p1 -b .no_lpthread
 %patch55 -p1 -b .pulseaudio-shared
 %patch56 -p1 -b .pulseaudio-buffering
