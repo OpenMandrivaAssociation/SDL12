@@ -1,7 +1,7 @@
 %define	fname	SDL
 %define	name	SDL12
 %define	version	1.2.13
-%define rel	12
+%define rel	13
 %define	lib_name_orig	lib%{fname}
 %define apiver 1.2
 %define	major 0
@@ -48,6 +48,8 @@ Patch55:	SDL-1.2.13-pulseaudio-shared.patch
 Patch56:	SDL-1.2.13-pulseaudio-buffering.patch
 # (fc) 1.2.13-7mdv fix crash in pulseaudio backend when /proc is not mounted (Mdv bug #38220)
 Patch57:	SDL-1.2.13-noproc.patch
+# (misc) patch from fedora to solve ri-li crash ( mdv bug #45721 )
+Patch58:    SDL-1.2.13-rh484362.patch 
 # libGL is required to enable glx support
 BuildRequires:	libmesaglu-devel
 BuildRequires:	esound-devel
@@ -160,7 +162,7 @@ applications which will use %{name}.
 %patch55 -p1 -b .pulseaudio-shared
 %patch56 -p1 -b .pulseaudio-buffering
 %patch57 -p1 -b .noproc
-
+%patch58 -p1 -b .disable_SDL_revcpy
 %build
 ./autogen.sh
 
