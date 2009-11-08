@@ -30,24 +30,16 @@ URL:		http://www.libsdl.org/
 Source0:	http://www.libsdl.org/release/%{fname}-%{version}.tar.gz
 Patch0:		SDL-1.2.10-fixrpath.patch
 Patch1:		SDL-1.2.10-libtool.patch
-Patch3:		SDL-1.2.10-fix-libtoolize.patch
 Patch4:		SDL-1.2.13-libdir.patch
-Patch21:	SDL-1.2.10-anonymous-enums.patch
-Patch31:	SDL-1.2.10-lock-keys.patch
-Patch38:	SDL-1.2.9-missing-mmx-blit.patch
-Patch39:	SDL-1.2.10-propagate-pic-to-nasm.patch
+Patch21:	SDL-1.2.14-anonymous-enums.patch
 Patch41:	SDL-1.2.10-nasm-include.patch
-Patch50:	SDL-1.2.10-byteorder.patch
+Patch50:	SDL-1.2.14-byteorder.patch
 # (cg) 1.2.13-10mdv Use pulse output by default
 Patch51:	SDL-1.2.13-preferpulse.patch
 Patch52:	SDL-1.2.12-pagesize.patch
-Patch54:	SDL-1.2.11-dont-propagate-lpthread.patch
-# (fc) 1.2.13-4mdv fix pulseaudio shared support
-Patch55:	SDL-1.2.13-pulseaudio-shared.patch
-# (cg) 1.2.13-10mdv Use upstream pulse buffering patch
-Patch56:	SDL-1.2.13-pulseaudio-buffering.patch
+Patch54:	SDL-1.2.14-dont-propagate-lpthread.patch
 # (fc) 1.2.13-7mdv fix crash in pulseaudio backend when /proc is not mounted (Mdv bug #38220)
-Patch57:	SDL-1.2.13-noproc.patch
+Patch57:	SDL-1.2.14-noproc.patch
 # (misc) patch from fedora to solve ri-li crash ( mdv bug #45721 )
 Patch58:    SDL-1.2.13-rh484362.patch 
 # libGL is required to enable glx support
@@ -58,6 +50,7 @@ BuildRequires:	chrpath
 BuildRequires:	libpulseaudio-devel
 BuildRequires:	libalsa-devel
 Buildrequires:	libxrandr-devel
+BuildRequires:	zlib-devel
 %ifarch %{ix86}
 BuildRequires:	yasm
 %endif
@@ -147,22 +140,17 @@ applications which will use %{name}.
 %prep
 %setup -q -n %{fname}-%{version}
 %patch0 -p1
-%patch1 -p1 -b .libtool
-%patch3 -p1 -b .libtoolize
-%patch4 -p1 -b .libdir
+#patch1 -p1 -b .libtool
+#patch4 -p1 -b .libdir
 %patch21 -p1 -b .enums
-%patch31 -p1 -b .lock
-%patch38 -p1 -b .mmx_blit
-%patch39 -p0 -b .nasm_pic
 %patch41 -p1 -b .nasm_include
 %patch50 -p1 -b .byteorder
-%patch51 -p1 -b .preferpulsealsa
-%patch52 -p1 -b .pagesize
+#patch51 -p1 -b .preferpulsealsa
+#patch52 -p1 -b .pagesize
 %patch54 -p1 -b .no_lpthread
-%patch55 -p1 -b .pulseaudio-shared
-%patch56 -p1 -b .pulseaudio-buffering
 %patch57 -p1 -b .noproc
 %patch58 -p1 -b .disable_SDL_revcpy
+
 %build
 ./autogen.sh
 
