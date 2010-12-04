@@ -1,7 +1,7 @@
 %define	fname	SDL
 %define	name	SDL12
 %define	version	1.2.14
-%define rel	1
+%define rel	2
 %define	lib_name_orig	lib%{fname}
 %define apiver 1.2
 %define	major 0
@@ -150,6 +150,9 @@ applications which will use %{name}.
 %patch54 -p1 -b .no_lpthread
 %patch57 -p1 -b .noproc
 %patch58 -p1 -b .disable_SDL_revcpy
+iconv -f ISO-8859-1 -t UTF-8 CREDITS > CREDITS.tmp
+touch -r CREDITS CREDITS.tmp
+mv CREDITS.tmp CREDITS
 
 %build
 ./autogen.sh
@@ -192,7 +195,7 @@ export CXXFLAGS="%{optflags} -fPIC -O3"
 		--enable-pulseaudio-shared \
 		--enable-alsa \
 		--enable-alsa-shared \
-        --disable-arts \
+		--disable-arts \
 		--program-prefix= \
 		--disable-rpath
 %make
