@@ -1,7 +1,7 @@
 %define	fname	SDL
 %define	name	SDL12
 %define	version	1.2.14
-%define rel	3
+%define rel	4
 %define	lib_name_orig	lib%{fname}
 %define apiver 1.2
 %define	major 0
@@ -42,6 +42,8 @@ Patch54:	SDL-1.2.14-dont-propagate-lpthread.patch
 Patch57:	SDL-1.2.14-noproc.patch
 # (misc) patch from fedora to solve ri-li crash ( mdv bug #45721 )
 Patch58:    SDL-1.2.13-rh484362.patch 
+# http://bugzilla.libsdl.org/show_bug.cgi?id=894 (fix bug in wesnoth windowed mode)
+Patch59:	SDL-1.2.14-accept_mouse_clicks_windowed_mode.patch
 # libGL is required to enable glx support
 BuildRequires:	libmesaglu-devel
 BuildRequires:	esound-devel
