@@ -163,8 +163,8 @@ mv CREDITS.tmp CREDITS
 
 %build
 
-export CFLAGS="%{optflags} -fPIC -O3"
-export CXXFLAGS="%{optflags} -fPIC -O3"
+export CFLAGS="%{optflags} -fPIC -ffast-math -O3"
+export CXXFLAGS="%{optflags} -fPIC -ffast-math -O3"
 
 %configure2_5x	--enable-video-opengl \
 		--disable-video-svga \
