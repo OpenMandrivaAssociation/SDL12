@@ -191,6 +191,7 @@ export CXXFLAGS="%{optflags} -fPIC -O3"
 %else
 		--disable-nasm \
 %endif
+		--enable-assembly \
 		--disable-debug \
 		--enable-dlopen \
 		--enable-sdl-dlopen \
