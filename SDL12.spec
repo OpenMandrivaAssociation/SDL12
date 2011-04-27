@@ -1,16 +1,9 @@
 %define	fname	SDL
 
-%if %{mdkversion} >= 1010
 %define build_plugins	0
 %define build_directfb	1
 %define build_ggi	1
 %define	build_aalib	1
-%else
-%define build_plugins	0
-%define build_directfb	0
-%define build_ggi	0
-%define	build_aalib	0
-%endif
 
 Summary:	Simple DirectMedia Layer
 Name:		SDL12
@@ -78,42 +71,11 @@ This is the Simple DirectMedia Layer, a generic API that provides low level
 access to audio, keyboard, mouse, and display framebuffer across multiple
 platforms.
 
-%if %{build_plugins}
-
-%if %{build_ggi}
-%package -n %{libname}-video-ggi
-Summary:	GGI video support for SDL
-Group:		System/Libraries
-Requires:	%{libname} = %{EVRD}
-
-%description -n	%{libname}-video-ggi
-This is the Simple DirectMedia Layer, a generic API that provides low level
-access to audio, keyboard, mouse, and display framebuffer across multiple
-platforms.
-
-This package provides GGI video support as a plugin to SDL.
-%endif
-
-%if %{build_directfb}
-%package -n	%{libname}-video-directfb
-Summary:	DirectFB video support for SDL
-Group:		System/Libraries
-
-%description -n	%{libname}-video-directfb
-This is the Simple DirectMedia Layer, a generic API that provides low level
-access to audio, keyboard, mouse, and display framebuffer across multiple
-platforms.
-
-This package provides DirectFB video support as a plugin to SDL.
-%endif
-
-%endif
-
 %define	lib_name_orig	lib%{fname}
-%define apiver 1.2
-%define	major 0
+%define	apiver	1.2
+%define	major	0
 %define	libname	%mklibname %{fname} %{apiver} %{major}
-%define develname %mklibname %{fname} -d
+%define	devname	%mklibname %{fname} -d
 
 %package -n	%{libname}
 Summary:	Main library for %{name}
@@ -141,9 +103,37 @@ Provides:	%{name}%{apiver}-devel
 %define	libold	%mklibname SDL %{fname} -d
 %rename	libold
 
-%description -n %{devname}
+%description -n	%{devname}
 This package contains the headers that programmers will need to develop
 applications which will use %{name}.
+
+%if %{build_plugins}
+%if %{build_ggi}
+%package -n	%{libname}-video-ggi
+Summary:	GGI video support for SDL
+Group:		System/Libraries
+
+%description -n	%{libname}-video-ggi
+This is the Simple DirectMedia Layer, a generic API that provides low level
+access to audio, keyboard, mouse, and display framebuffer across multiple
+platforms.
+
+This package provides GGI video support as a plugin to SDL.
+%endif
+
+%if %{build_directfb}
+%package -n	%{libname}-video-directfb
+Summary:	DirectFB video support for SDL
+Group:		System/Libraries
+
+%description -n	%{libname}-video-directfb
+This is the Simple DirectMedia Layer, a generic API that provides low level
+access to audio, keyboard, mouse, and display framebuffer across multiple
+platforms.
+
+This package provides DirectFB video support as a plugin to SDL.
+%endif
+%endif
 
 %prep
 %setup -q -n %{fname}-%{version}
@@ -196,7 +186,7 @@ export CXXFLAGS="%{optflags} -fPIC -O3"
 		--enable-video-aalib-plugin \
 %endif
 %endif
-%ifarch %{ix86}
+%ifarch %{ix86} x86_64
 		--enable-nasm \
 %else
 		--disable-nasm \
@@ -207,6 +197,7 @@ export CXXFLAGS="%{optflags} -fPIC -O3"
 		--enable-esd \
 		--enable-esd-shared \
 		--enable-nas \
+		--enable-nas-shared \
 		--enable-pulseaudio \
 		--enable-pulseaudio-shared \
 		--enable-alsa \
