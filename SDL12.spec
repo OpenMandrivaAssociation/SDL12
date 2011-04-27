@@ -1,12 +1,4 @@
 %define	fname	SDL
-%define	name	SDL12
-%define	version	1.2.14
-%define rel	4
-%define	lib_name_orig	lib%{fname}
-%define apiver 1.2
-%define	major 0
-%define	libname	%mklibname %{fname} %{apiver} %{major}
-%define develname %mklibname %{fname} -d
 
 %if %{mdkversion} >= 1010
 %define build_plugins	0
@@ -21,9 +13,9 @@
 %endif
 
 Summary:	Simple DirectMedia Layer
-Name:		%{name}
-Version:	%{version}
-Release:	%mkrel %{rel}
+Name:		SDL12
+Version:	1.2.14
+Release:	6
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.libsdl.org/
@@ -41,9 +33,21 @@ Patch54:	SDL-1.2.14-dont-propagate-lpthread.patch
 # (fc) 1.2.13-7mdv fix crash in pulseaudio backend when /proc is not mounted (Mdv bug #38220)
 Patch57:	SDL-1.2.14-noproc.patch
 # (misc) patch from fedora to solve ri-li crash ( mdv bug #45721 )
-Patch58:    SDL-1.2.13-rh484362.patch 
+Patch58:	SDL-1.2.13-rh484362.patch 
 # http://bugzilla.libsdl.org/show_bug.cgi?id=894 (fix bug in wesnoth windowed mode)
 Patch59:	SDL-1.2.14-accept_mouse_clicks_windowed_mode.patch
+
+# debian patches
+Patch100:	011_no_yasm.diff
+Patch101:	012_nasm_include.diff
+Patch102:	060_disable_ipod.diff
+Patch103:	205_x11_keysym_fix.diff
+Patch104:	221_check_SDL_NOKBD_environment_variable.diff
+Patch105:	222_joystick_crash.diff
+Patch106:	300_dont_propagate_lpthread.diff
+Patch107:	310_fixmouseclicks
+Patch108:	320_disappearingcursor.diff
+
 # libGL is required to enable glx support
 BuildRequires:	libmesaglu-devel
 BuildRequires:	esound-devel
@@ -68,7 +72,6 @@ BuildRequires:	libggi-devel
 %if %{build_aalib}
 BuildRequires:	aalib-devel
 %endif
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 This is the Simple DirectMedia Layer, a generic API that provides low level
@@ -81,9 +84,9 @@ platforms.
 %package -n %{libname}-video-ggi
 Summary:	GGI video support for SDL
 Group:		System/Libraries
-Requires:	%{libname} = %{version}-%{release}
+Requires:	%{libname} = %{EVRD}
 
-%description -n %{libname}-video-ggi
+%description -n	%{libname}-video-ggi
 This is the Simple DirectMedia Layer, a generic API that provides low level
 access to audio, keyboard, mouse, and display framebuffer across multiple
 platforms.
@@ -92,12 +95,11 @@ This package provides GGI video support as a plugin to SDL.
 %endif
 
 %if %{build_directfb}
-%package -n %{libname}-video-directfb
+%package -n	%{libname}-video-directfb
 Summary:	DirectFB video support for SDL
 Group:		System/Libraries
-Requires:	%{libname} = %{version}-%{release}
 
-%description -n %{libname}-video-directfb
+%description -n	%{libname}-video-directfb
 This is the Simple DirectMedia Layer, a generic API that provides low level
 access to audio, keyboard, mouse, and display framebuffer across multiple
 platforms.
@@ -107,35 +109,39 @@ This package provides DirectFB video support as a plugin to SDL.
 
 %endif
 
-%package -n %{libname}
+%define	lib_name_orig	lib%{fname}
+%define apiver 1.2
+%define	major 0
+%define	libname	%mklibname %{fname} %{apiver} %{major}
+%define develname %mklibname %{fname} -d
+
+%package -n	%{libname}
 Summary:	Main library for %{name}
 Group:		System/Libraries
 Provides:	%{name} = %{version}-%{release}
-Provides:	%{lib_name_orig} = %{version}-%{release}
-Obsoletes:	SDL
-Provides:	SDL
-Obsoletes:	%mklibname SDL 1.2
-Provides:	%mklibname SDL 1.2
+%rename		%{fname}
+%define	libold	%mklibname %{fname} 1.2
+%rename		%{libold}
 
-%description -n %{libname}
+%description -n	%{libname}
 This package contains the library needed to run programs dynamically
 linked with %{name}.
 
-%package -n %{develname}
+%package -n	%{devname}
 Summary:	Headers for developing programs that will use %{name}
 Group:		Development/C
-Requires:	%{libname} = %{version}
+Requires:	%{libname} = %{EVRD}
 Requires:	libalsa-devel >= 0.9.0
 # GL/GLU referenced in headers, but is dlopened so there are no autodeps:
 Requires:	mesagl-devel
 Requires:	mesaglu-devel
 Provides:	%{lib_name_orig}-devel = %{version}-%{release}
-Provides:	SDL-devel
-Provides:	SDL%{apiver}-devel
-Obsoletes:	%mklibname SDL 1.2 -d
-Provides:	%mklibname SDL 1.2 -d
+Provides:	%{fname}-devel = %{EVRD}
+Provides:	%{name}%{apiver}-devel
+%define	libold	%mklibname SDL %{fname} -d
+%rename	libold
 
-%description -n %{develname}
+%description -n %{devname}
 This package contains the headers that programmers will need to develop
 applications which will use %{name}.
 
@@ -156,8 +162,16 @@ iconv -f ISO-8859-1 -t UTF-8 CREDITS > CREDITS.tmp
 touch -r CREDITS CREDITS.tmp
 mv CREDITS.tmp CREDITS
 
-%build
+%patch100 -p1
+%patch102 -p1
+%patch103 -p1
+%patch104 -p1
+%patch105 -p1
+%patch107 -p1
+%patch108 -p1
 ./autogen.sh
+
+%build
 
 export CFLAGS="%{optflags} -fPIC -O3"
 export CXXFLAGS="%{optflags} -fPIC -O3"
@@ -203,7 +217,6 @@ export CXXFLAGS="%{optflags} -fPIC -O3"
 %make
 
 %install
-rm -rf %{buildroot}
 %makeinstall_std
 
 # remove unpackaged files
@@ -217,18 +230,7 @@ chrpath -d %{buildroot}%{_libdir}/libSDL.so
 #multiarch
 %multiarch_binaries %{buildroot}%{_bindir}/sdl-config
 
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
-%clean
-rm -rf %{buildroot}
-
 %files -n %{libname}
-%defattr(-,root,root)
 %doc README-SDL.txt CREDITS BUGS
 %{_libdir}/libSDL-%{apiver}.so.%{major}*
 %if %{build_plugins}
@@ -239,24 +241,21 @@ rm -rf %{buildroot}
 
 %if %{build_ggi}
 %files -n %{libname}-video-ggi
-%defattr(-,root,root)
 %{_libdir}/SDL/video_ggi.*
 %endif
 
 %if %{build_directfb}
 %files -n %{libname}-video-directfb
-%defattr(-,root,root)
 %{_libdir}/SDL/video_directfb.*
 %endif
 
 %endif
 
-%files -n %{develname}
-%defattr(-,root,root)
+%files -n %{devname}
 %doc README README-SDL.txt CREDITS BUGS WhatsNew docs.html
 %doc docs/html/*.html
 %{_bindir}/sdl-config
-%multiarch %{multiarch_bindir}/sdl-config
+%{multiarch_bindir}/sdl-config
 %{_libdir}/pkgconfig/sdl.pc
 %{_libdir}/*a
 %{_libdir}/*.so
