@@ -8,7 +8,7 @@
 Summary:	Simple DirectMedia Layer
 Name:		SDL12
 Version:	1.2.14
-Release:	6
+Release:	7
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.libsdl.org/
