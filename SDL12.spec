@@ -65,6 +65,8 @@ BuildRequires:	libggi-devel
 %if %{build_aalib}
 BuildRequires:	aalib-devel
 %endif
+# just to get multiarch fix properly
+BuildRequires:	rpm >= 5.3.10-0.20110422.2
 
 %description
 This is the Simple DirectMedia Layer, a generic API that provides low level
