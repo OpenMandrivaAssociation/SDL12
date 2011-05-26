@@ -8,7 +8,7 @@
 Summary:	Simple DirectMedia Layer
 Name:		SDL12
 Version:	1.2.14
-Release:	7
+Release:	8
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.libsdl.org/
@@ -84,7 +84,7 @@ Summary:	Main library for %{name}
 Group:		System/Libraries
 Provides:	%{name} = %{version}-%{release}
 %rename		%{fname}
-%define	libold	%mklibname %{fname} 1.2
+%define	libold	%mklibname %{fname} 1.2
 %rename		%{libold}
 
 %description -n	%{libname}
