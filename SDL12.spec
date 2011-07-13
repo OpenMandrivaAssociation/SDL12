@@ -29,6 +29,8 @@ Patch57:	SDL-1.2.14-noproc.patch
 Patch58:	SDL-1.2.13-rh484362.patch 
 # http://bugzilla.libsdl.org/show_bug.cgi?id=894 (fix bug in wesnoth windowed mode)
 Patch59:	SDL-1.2.14-accept_mouse_clicks_windowed_mode.patch
+# Do not call memcpy() on overlapping areas, in upstream, sdl1090, rh669844
+Patch60:	SDL-1.2.14-SDL_BlitCopyOverlap_memcpy.patch
 
 # debian patches
 Patch100:	011_no_yasm.diff
@@ -139,16 +141,18 @@ This package provides DirectFB video support as a plugin to SDL.
 %prep
 %setup -q -n %{fname}-%{version}
 %patch0 -p1
-#patch1 -p1 -b .libtool
-#patch4 -p1 -b .libdir
-%patch21 -p1 -b .enums
-%patch41 -p1 -b .nasm_include
-%patch50 -p1 -b .byteorder
-#patch51 -p1 -b .preferpulsealsa
-#patch52 -p1 -b .pagesize
-%patch54 -p1 -b .no_lpthread
-%patch57 -p1 -b .noproc
-%patch58 -p1 -b .disable_SDL_revcpy
+#patch1 -p1 -b .libtool~
+#patch4 -p1 -b .libdir~
+%patch21 -p1 -b .enums~
+%patch41 -p1 -b .nasm_include~
+%patch50 -p1 -b .byteorder~
+#patch51 -p1 -b .preferpulsealsa~
+#patch52 -p1 -b .pagesize~
+%patch54 -p1 -b .no_lpthread~
+%patch57 -p1 -b .noproc~
+%patch58 -p1 -b .disable_SDL_revcpy~
+%patch60 -p1 -b .SDL_BlitCopyOverlap_memcpy~
+
 iconv -f ISO-8859-1 -t UTF-8 CREDITS > CREDITS.tmp
 touch -r CREDITS CREDITS.tmp
 mv CREDITS.tmp CREDITS
