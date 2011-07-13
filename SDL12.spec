@@ -200,8 +200,6 @@ export CXXFLAGS="%{optflags} -fPIC -ffast-math -O3"
 		--disable-nasm \
 %endif
 		--enable-assembly \
-		--disable-debug \
-		--enable-dlopen \
 		--enable-sdl-dlopen \
 		--enable-nas \
 		--enable-nas-shared \
