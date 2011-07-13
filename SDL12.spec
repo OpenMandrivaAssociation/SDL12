@@ -8,7 +8,7 @@
 Summary:	Simple DirectMedia Layer
 Name:		SDL12
 Version:	1.2.14
-Release:	8
+Release:	9
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.libsdl.org/
@@ -43,7 +43,6 @@ Patch108:	320_disappearingcursor.diff
 
 # libGL is required to enable glx support
 BuildRequires:	libmesaglu-devel
-BuildRequires:	esound-devel
 BuildRequires:	nas-devel
 BuildRequires:	chrpath
 BuildRequires:	libpulseaudio-devel
@@ -197,8 +196,6 @@ export CXXFLAGS="%{optflags} -fPIC -ffast-math -O3"
 		--disable-debug \
 		--enable-dlopen \
 		--enable-sdl-dlopen \
-		--enable-esd \
-		--enable-esd-shared \
 		--enable-nas \
 		--enable-nas-shared \
 		--enable-pulseaudio \
@@ -206,6 +203,7 @@ export CXXFLAGS="%{optflags} -fPIC -ffast-math -O3"
 		--enable-alsa \
 		--enable-alsa-shared \
 		--disable-arts \
+		--disable-esd \
 		--program-prefix= \
 		--disable-rpath
 %make
