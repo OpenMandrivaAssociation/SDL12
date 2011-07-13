@@ -175,8 +175,8 @@ mv CREDITS.tmp CREDITS
 
 %build
 
-export CFLAGS="%{optflags} -fPIC -ffast-math -O3"
-export CXXFLAGS="%{optflags} -fPIC -ffast-math -O3"
+export CFLAGS="%{optflags} -fPIC -funroll-loops -ffast-math -O3"
+export CXXFLAGS="$CFLAGS"
 
 %configure2_5x	--enable-video-opengl \
 		--disable-video-svga \
