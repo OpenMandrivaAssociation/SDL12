@@ -29,10 +29,13 @@ Patch57:	SDL-1.2.14-noproc.patch
 Patch58:	SDL-1.2.13-rh484362.patch 
 # http://bugzilla.libsdl.org/show_bug.cgi?id=894 (fix bug in wesnoth windowed mode)
 Patch59:	SDL-1.2.14-accept_mouse_clicks_windowed_mode.patch
+# (proyvind): P60- is from fedora
 # Do not call memcpy() on overlapping areas, in upstream, sdl1090, rh669844
 Patch60:	SDL-1.2.14-SDL_BlitCopyOverlap_memcpy.patch
 # nasm-2.09 aliased elf to elf32, in upstream, sdl1152, rh678818
 Patch61:	SDL-1.2.14-nasm-2.09-compat.patch
+# Submitted upstream: http://bugzilla.libsdl.org/show_bug.cgi?id=1009
+Patch62:	SDL-1.2.14-xio_error-rh603984.patch
 
 # debian patches
 Patch100:	011_no_yasm.diff
@@ -155,6 +158,7 @@ This package provides DirectFB video support as a plugin to SDL.
 %patch58 -p1 -b .disable_SDL_revcpy~
 %patch60 -p1 -b .SDL_BlitCopyOverlap_memcpy~
 %patch61 -p1 -b .nasm209~
+%patch62 -p1 -b .xio_error
 
 iconv -f ISO-8859-1 -t UTF-8 CREDITS > CREDITS.tmp
 touch -r CREDITS CREDITS.tmp
