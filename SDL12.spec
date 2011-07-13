@@ -31,6 +31,8 @@ Patch58:	SDL-1.2.13-rh484362.patch
 Patch59:	SDL-1.2.14-accept_mouse_clicks_windowed_mode.patch
 # Do not call memcpy() on overlapping areas, in upstream, sdl1090, rh669844
 Patch60:	SDL-1.2.14-SDL_BlitCopyOverlap_memcpy.patch
+# nasm-2.09 aliased elf to elf32, in upstream, sdl1152, rh678818
+Patch61:	SDL-1.2.14-nasm-2.09-compat.patch
 
 # debian patches
 Patch100:	011_no_yasm.diff
@@ -152,12 +154,13 @@ This package provides DirectFB video support as a plugin to SDL.
 %patch57 -p1 -b .noproc~
 %patch58 -p1 -b .disable_SDL_revcpy~
 %patch60 -p1 -b .SDL_BlitCopyOverlap_memcpy~
+%patch61 -p1 -b .nasm209~
 
 iconv -f ISO-8859-1 -t UTF-8 CREDITS > CREDITS.tmp
 touch -r CREDITS CREDITS.tmp
 mv CREDITS.tmp CREDITS
 
-%patch100 -p1
+%patch100 -p1 -b .noyasm~
 %patch102 -p1
 %patch103 -p1
 %patch104 -p1
