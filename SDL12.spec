@@ -8,7 +8,7 @@
 Summary:	Simple DirectMedia Layer
 Name:		SDL12
 Version:	1.2.14
-Release:	9
+Release:	10
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.libsdl.org/
@@ -54,7 +54,7 @@ BuildRequires:	nas-devel
 BuildRequires:	chrpath
 BuildRequires:	libpulseaudio-devel
 BuildRequires:	libalsa-devel
-Buildrequires:	libxrandr-devel
+BuildRequires:	libxrandr-devel
 BuildRequires:	zlib-devel
 %ifarch %{ix86}
 BuildRequires:	yasm
@@ -88,7 +88,6 @@ platforms.
 %package -n	%{libname}
 Summary:	Main library for %{name}
 Group:		System/Libraries
-Provides:	%{name} = %{version}-%{release}
 %rename		%{fname}
 %define	libold	%mklibname %{fname} 1.2
 %rename		%{libold}
@@ -107,7 +106,7 @@ Requires:	mesagl-devel
 Requires:	mesaglu-devel
 Provides:	%{lib_name_orig}-devel = %{version}-%{release}
 Provides:	%{fname}-devel = %{EVRD}
-Provides:	%{name}%{apiver}-devel
+Provides:	%{name}%{apiver}-devel = %{version}-%{release}
 %define	libold	%mklibname SDL %{fname} -d
 %rename	libold
 
