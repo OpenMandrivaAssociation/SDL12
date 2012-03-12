@@ -53,7 +53,7 @@ BuildRequires:	libmesaglu-devel
 BuildRequires:	nas-devel
 BuildRequires:	chrpath
 BuildRequires:	libpulseaudio-devel
-BuildRequires:	alsa-lib-devel
+BuildRequires:	pkgconfig(alsa)
 BuildRequires:	libxrandr-devel
 BuildRequires:	zlib-devel
 %ifarch %{ix86}
@@ -100,7 +100,7 @@ linked with %{name}.
 Summary:	Headers for developing programs that will use %{name}
 Group:		Development/C
 Requires:	%{libname} = %{EVRD}
-Requires:	alsa-lib-devel
+Requires:	pkgconfig(alsa)
 # GL/GLU referenced in headers, but is dlopened so there are no autodeps:
 Requires:	mesagl-devel
 Requires:	mesaglu-devel
