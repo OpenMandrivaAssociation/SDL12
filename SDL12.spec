@@ -8,7 +8,7 @@
 Summary:	Simple DirectMedia Layer
 Name:		SDL12
 Version:	1.2.14
-Release:	11
+Release:	12
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.libsdl.org/
@@ -53,7 +53,7 @@ BuildRequires:	libmesaglu-devel
 BuildRequires:	nas-devel
 BuildRequires:	chrpath
 BuildRequires:	libpulseaudio-devel
-BuildRequires:	libalsa-devel
+BuildRequires:	alsa-lib-devel
 BuildRequires:	libxrandr-devel
 BuildRequires:	zlib-devel
 %ifarch %{ix86}
@@ -100,7 +100,7 @@ linked with %{name}.
 Summary:	Headers for developing programs that will use %{name}
 Group:		Development/C
 Requires:	%{libname} = %{EVRD}
-Requires:	libalsa-devel >= 0.9.0
+Requires:	alsa-lib-devel
 # GL/GLU referenced in headers, but is dlopened so there are no autodeps:
 Requires:	mesagl-devel
 Requires:	mesaglu-devel
