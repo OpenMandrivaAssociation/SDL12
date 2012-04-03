@@ -8,7 +8,7 @@
 Summary:	Simple DirectMedia Layer
 Name:		SDL12
 Version:	1.2.15
-Release:	1
+Release:	2
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.libsdl.org/
@@ -25,14 +25,15 @@ Patch58:	SDL-1.2.13-rh484362.patch
 # debian patches
 Patch102:	060_disable_ipod.diff
 Patch103:	205_x11_keysym_fix.diff
+# needs to be updated or dropped
 Patch104:	221_check_SDL_NOKBD_environment_variable.diff
 Patch107:	310_fixmouseclicks
 
 # libGL is required to enable glx support
-BuildRequires:	libmesaglu-devel
+BuildRequires:	mesaglu-devel
 BuildRequires:	nas-devel
 BuildRequires:	chrpath
-BuildRequires:	libpulseaudio-devel
+BuildRequires:	pkgconfig(libpulse)
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	libxrandr-devel
 BuildRequires:	zlib-devel
