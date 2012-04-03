@@ -136,7 +136,7 @@ mv CREDITS.tmp CREDITS
 
 %patch102 -p1
 %patch103 -p1
-%patch104 -p1
+##patch104 -p1
 %patch107 -p1
 
 %build
