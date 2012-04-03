@@ -1,52 +1,32 @@
 %define	fname	SDL
 
-%define build_plugins	0
-%define build_directfb	1
-%define build_ggi	1
+%define	build_plugins	0
+%define	build_directfb	1
+%define	build_ggi	1
 %define	build_aalib	1
 
 Summary:	Simple DirectMedia Layer
 Name:		SDL12
-Version:	1.2.14
-Release:	12
+Version:	1.2.15
+Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.libsdl.org/
 Source0:	http://www.libsdl.org/release/%{fname}-%{version}.tar.gz
 Patch0:		SDL-1.2.10-fixrpath.patch
-Patch1:		SDL-1.2.10-libtool.patch
-Patch4:		SDL-1.2.13-libdir.patch
 Patch21:	SDL-1.2.14-anonymous-enums.patch
-Patch41:	SDL-1.2.10-nasm-include.patch
-Patch50:	SDL-1.2.14-byteorder.patch
 # (cg) 1.2.13-10mdv Use pulse output by default
-Patch51:	SDL-1.2.13-preferpulse.patch
-Patch52:	SDL-1.2.12-pagesize.patch
 Patch54:	SDL-1.2.14-dont-propagate-lpthread.patch
 # (fc) 1.2.13-7mdv fix crash in pulseaudio backend when /proc is not mounted (Mdv bug #38220)
 Patch57:	SDL-1.2.14-noproc.patch
 # (misc) patch from fedora to solve ri-li crash ( mdv bug #45721 )
 Patch58:	SDL-1.2.13-rh484362.patch 
-# http://bugzilla.libsdl.org/show_bug.cgi?id=894 (fix bug in wesnoth windowed mode)
-Patch59:	SDL-1.2.14-accept_mouse_clicks_windowed_mode.patch
-# (proyvind): P60- is from fedora
-# Do not call memcpy() on overlapping areas, in upstream, sdl1090, rh669844
-Patch60:	SDL-1.2.14-SDL_BlitCopyOverlap_memcpy.patch
-# nasm-2.09 aliased elf to elf32, in upstream, sdl1152, rh678818
-Patch61:	SDL-1.2.14-nasm-2.09-compat.patch
-# Submitted upstream: http://bugzilla.libsdl.org/show_bug.cgi?id=1009
-Patch62:	SDL-1.2.14-xio_error-rh603984.patch
 
 # debian patches
-Patch100:	011_no_yasm.diff
-Patch101:	012_nasm_include.diff
 Patch102:	060_disable_ipod.diff
 Patch103:	205_x11_keysym_fix.diff
 Patch104:	221_check_SDL_NOKBD_environment_variable.diff
-Patch105:	222_joystick_crash.diff
-Patch106:	300_dont_propagate_lpthread.diff
 Patch107:	310_fixmouseclicks
-Patch108:	320_disappearingcursor.diff
 
 # libGL is required to enable glx support
 BuildRequires:	libmesaglu-devel
@@ -145,35 +125,22 @@ This package provides DirectFB video support as a plugin to SDL.
 %prep
 %setup -q -n %{fname}-%{version}
 %patch0 -p1
-#patch1 -p1 -b .libtool~
-#patch4 -p1 -b .libdir~
 %patch21 -p1 -b .enums~
-%patch41 -p1 -b .nasm_include~
-%patch50 -p1 -b .byteorder~
-#patch51 -p1 -b .preferpulsealsa~
-#patch52 -p1 -b .pagesize~
 %patch54 -p1 -b .no_lpthread~
 %patch57 -p1 -b .noproc~
 %patch58 -p1 -b .disable_SDL_revcpy~
-%patch60 -p1 -b .SDL_BlitCopyOverlap_memcpy~
-%patch61 -p1 -b .nasm209~
-%patch62 -p1 -b .xio_error
 
 iconv -f ISO-8859-1 -t UTF-8 CREDITS > CREDITS.tmp
 touch -r CREDITS CREDITS.tmp
 mv CREDITS.tmp CREDITS
 
-%patch100 -p1 -b .noyasm~
 %patch102 -p1
 %patch103 -p1
 %patch104 -p1
-%patch105 -p1
 %patch107 -p1
-%patch108 -p1
-./autogen.sh
 
 %build
-
+./autogen.sh
 export CFLAGS="%{optflags} -fPIC -funroll-loops -ffast-math -O3"
 export CXXFLAGS="$CFLAGS"
 
