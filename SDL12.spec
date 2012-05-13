@@ -8,7 +8,7 @@
 Summary:	Simple DirectMedia Layer
 Name:		SDL12
 Version:	1.2.15
-Release:	2
+Release:	3
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.libsdl.org/
@@ -44,7 +44,7 @@ BuildRequires:	yasm
 BuildRequires:	libtool-devel
 %endif
 %if %{build_directfb}
-BuildRequires:	DirectFB-devel >= 1.0.0
+BuildRequires:	DirectFB-devel >= 1.5.3
 %endif
 %if %{build_ggi}
 BuildRequires:	libggi-devel
