@@ -139,9 +139,9 @@ mv CREDITS.tmp CREDITS
 %patch103 -p1
 ##patch104 -p1
 %patch107 -p1
+./autogen.sh
 
 %build
-./autogen.sh
 export CFLAGS="%{optflags} -fPIC -funroll-loops -ffast-math -O3"
 export CXXFLAGS="$CFLAGS"
 
