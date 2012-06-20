@@ -142,7 +142,7 @@ mv CREDITS.tmp CREDITS
 ./autogen.sh
 
 %build
-export CFLAGS="%{optflags} -fPIC -funroll-loops -ffast-math -O3"
+export CFLAGS="%{optflags} -fPIC -funroll-loops -Ofast"
 export CXXFLAGS="$CFLAGS"
 
 %configure2_5x	--enable-video-opengl \
