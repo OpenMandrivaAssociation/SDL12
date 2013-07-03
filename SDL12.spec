@@ -18,13 +18,15 @@ Group:		System/Libraries
 Url:		http://www.libsdl.org/
 Source0:	http://www.libsdl.org/release/%{fname}-%{version}.tar.gz
 Patch0:		SDL-1.2.10-fixrpath.patch
-Patch21:	SDL-1.2.14-anonymous-enums.patch
+Patch1:		SDL-1.2.14-anonymous-enums.patch
 # (cg) 1.2.13-10mdv Use pulse output by default
-Patch54:	SDL-1.2.14-dont-propagate-lpthread.patch
+Patch2:		SDL-1.2.14-dont-propagate-lpthread.patch
 # (fc) 1.2.13-7mdv fix crash in pulseaudio backend when /proc is not mounted (Mdv bug #38220)
-Patch57:	SDL-1.2.14-noproc.patch
+Patch3:		SDL-1.2.14-noproc.patch
 # (misc) patch from fedora to solve ri-li crash ( mdv bug #45721 )
-Patch58:	SDL-1.2.13-rh484362.patch 
+Patch4:		SDL-1.2.13-rh484362.patch 
+# (MD) from fedora
+Patch5:		SDL-1.2.15-const_XData32.patch
 
 # debian patches
 Patch102:	060_disable_ipod.diff
@@ -75,7 +77,7 @@ linked with %{name}.
 Summary:	Headers for developing programs that will use %{name}
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
-Provides:	%{name}%{api}-devel = %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release}
 
 %description -n	%{devname}
 This package contains the headers that programmers will need to develop
@@ -165,6 +167,8 @@ export CXXFLAGS="$CFLAGS"
 
 %install
 %makeinstall_std
+
+rm -f %{buildroot}%{_libdir}/*.a
 
 # --disable-rpath does not seem to work correctly
 chrpath -d %{buildroot}%{_libdir}/libSDL.so
