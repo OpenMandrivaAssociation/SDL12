@@ -5,14 +5,14 @@
 %define	devname	%mklibname %{fname} -d
 
 %define	build_plugins	0
-%define	build_directfb	1
+%define	build_directfb	0
 %define	build_ggi	1
 %define	build_aalib	1
 
 Summary:	Simple DirectMedia Layer
 Name:		SDL12
 Version:	1.2.15
-Release:	12
+Release:	13
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.libsdl.org/
@@ -124,8 +124,7 @@ mv CREDITS.tmp CREDITS
 %build
 export CFLAGS="%{optflags} -fPIC -funroll-loops -ffast-math -O3"
 export CXXFLAGS="$CFLAGS"
-%configure2_5x \
-	--disable-static \
+%configure \
 	--enable-video-opengl \
 	--disable-video-svga \
 %if %{build_ggi}
@@ -161,8 +160,8 @@ export CXXFLAGS="$CFLAGS"
 	--enable-alsa-shared \
 	--disable-arts \
 	--disable-esd \
-	--program-prefix= \
-	--disable-rpath
+	--program-prefix=
+
 %make
 
 %install
