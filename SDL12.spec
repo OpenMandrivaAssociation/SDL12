@@ -5,7 +5,7 @@
 %define	devname	%mklibname %{fname} -d
 
 %define	build_plugins	0
-%define	build_directfb	0
+%define	build_directfb	1
 %define	build_ggi	1
 %define	build_aalib	1
 
