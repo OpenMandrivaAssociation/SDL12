@@ -3,6 +3,7 @@
 %define	major	0
 %define	libname	%mklibname %{fname} %{api} %{major}
 %define	devname	%mklibname %{fname} -d
+%define _disable_lto 1
 
 %define	build_plugins	0
 %define	build_directfb	1
@@ -12,7 +13,7 @@
 Summary:	Simple DirectMedia Layer
 Name:		SDL12
 Version:	1.2.15
-Release:	18
+Release:	19
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.libsdl.org/
