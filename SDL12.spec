@@ -13,7 +13,7 @@
 Summary:	Simple DirectMedia Layer
 Name:		SDL12
 Version:	1.2.15
-Release:	22
+Release:	23
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.libsdl.org/
@@ -173,9 +173,6 @@ rm -f %{buildroot}%{_libdir}/*.a
 # --disable-rpath does not seem to work correctly
 chrpath -d %{buildroot}%{_libdir}/libSDL.so
 
-#multiarch
-%multiarch_binaries %{buildroot}%{_bindir}/sdl-config
-
 %files -n %{libname}
 %doc README-SDL.txt CREDITS BUGS
 %{_libdir}/libSDL-%{api}.so.%{major}*
@@ -201,7 +198,6 @@ chrpath -d %{buildroot}%{_libdir}/libSDL.so
 %doc README README-SDL.txt CREDITS BUGS WhatsNew docs.html
 %doc docs/html/*.html
 %{_bindir}/sdl-config
-%{multiarch_bindir}/sdl-config
 %{_libdir}/pkgconfig/sdl.pc
 %{_libdir}/*.so
 %dir %{_includedir}/SDL
