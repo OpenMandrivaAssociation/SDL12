@@ -37,7 +37,9 @@ Patch103:	205_x11_keysym_fix.diff
 Patch107:	310_fixmouseclicks
 
 BuildRequires:	chrpath
+%ifnarch %{riscv}
 BuildRequires:	nas-devel
+%endif
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
