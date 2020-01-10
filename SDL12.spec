@@ -116,7 +116,7 @@ This package provides DirectFB video support as a plugin to SDL.
 
 %prep
 %setup -qn %{fname}-%{version}
-%apply_patches
+%autopatch -p1
 
 iconv -f ISO-8859-1 -t UTF-8 CREDITS > CREDITS.tmp
 touch -r CREDITS CREDITS.tmp
