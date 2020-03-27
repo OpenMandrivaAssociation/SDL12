@@ -13,7 +13,7 @@
 Summary:	Simple DirectMedia Layer
 Name:		SDL12
 Version:	1.2.15
-Release:	25
+Release:	26
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.libsdl.org/
@@ -125,7 +125,7 @@ mv CREDITS.tmp CREDITS
 ./autogen.sh
 
 %build
-export CFLAGS="%{optflags} -fPIC -funroll-loops -ffast-math -O3"
+export CFLAGS="%{optflags} -fPIC -funroll-loops -O3"
 export CXXFLAGS="$CFLAGS"
 %configure \
 	--enable-video-opengl \
