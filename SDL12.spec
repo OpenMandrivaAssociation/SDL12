@@ -12,34 +12,18 @@
 
 Summary:	Simple DirectMedia Layer
 Name:		SDL12
-Version:	1.2.15
-Release:	27
+Version:	1.2.68
+Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
-Url:		http://www.libsdl.org/
-Source0:	http://www.libsdl.org/release/%{fname}-%{version}.tar.gz
-Patch0:		SDL-1.2.10-fixrpath.patch
-Patch1:		SDL-1.2.14-anonymous-enums.patch
-# (cg) 1.2.13-10mdv Use pulse output by default
-Patch2:		SDL-1.2.14-dont-propagate-lpthread.patch
-# (fc) 1.2.13-7mdv fix crash in pulseaudio backend when /proc is not mounted (Mdv bug #38220)
-Patch3:		SDL-1.2.14-noproc.patch
-# (misc) patch from fedora to solve ri-li crash ( mdv bug #45721 )
-Patch4:		SDL-1.2.13-rh484362.patch 
-# (MD) from fedora
-Patch5:		SDL-1.2.15-const_XData32.patch
-
-# debian patches
-Patch102:	060_disable_ipod.diff
-Patch103:	205_x11_keysym_fix.diff
-# needs to be updated or dropped
-#Patch104:	221_check_SDL_NOKBD_environment_variable.diff
-Patch107:	310_fixmouseclicks
+Url:		https://github.com/libsdl-org/sdl12-compat
+Source0:	https://github.com/libsdl-org/sdl12-compat/archive/refs/tags/release-%{version}.tar.gz
 
 BuildRequires:	chrpath
 %ifnarch %{riscv}
 BuildRequires:	nas-devel
 %endif
+BuildRequires:	pkgconfig(sdl2)
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glu)
@@ -61,6 +45,7 @@ BuildRequires:	libggi-devel
 %if %{build_aalib}
 BuildRequires:	aalib-devel
 %endif
+BuildSystem:	cmake
 
 %description
 This is the Simple DirectMedia Layer, a generic API that provides low level
@@ -114,70 +99,12 @@ This package provides DirectFB video support as a plugin to SDL.
 %endif
 %endif
 
-%prep
-%setup -qn %{fname}-%{version}
-%autopatch -p1
-
-iconv -f ISO-8859-1 -t UTF-8 CREDITS > CREDITS.tmp
-touch -r CREDITS CREDITS.tmp
-mv CREDITS.tmp CREDITS
-
-./autogen.sh
-
-%build
-export CFLAGS="%{optflags} -fPIC -funroll-loops -O3"
-export CXXFLAGS="$CFLAGS"
-%configure \
-	--enable-video-opengl \
-	--disable-video-svga \
-%if %{build_ggi}
-	--enable-video-ggi \
-%if %{build_plugins}
-	--enable-video-ggi-plugin \
-%endif
-%endif
-%if %{build_directfb}
-	--enable-video-directfb \
-%if %{build_plugins}
-	--enable-video-directfb-plugin \
-%endif
-%endif
-%if %{build_aalib}
-	--enable-video-aalib \
-%if %{build_plugins}
-	--enable-video-aalib-plugin \
-%endif
-%endif
-%ifarch %{ix86} x86_64
-	--enable-nasm \
-%else
-	--disable-nasm \
-%endif
-	--enable-assembly \
-	--enable-sdl-dlopen \
-	--enable-nas \
-	--enable-nas-shared \
-	--enable-pulseaudio \
-	--enable-pulseaudio-shared \
-	--enable-alsa \
-	--enable-alsa-shared \
-	--disable-arts \
-	--disable-esd \
-	--program-prefix=
-
-%make
-
-%install
-%makeinstall_std
-
-rm -f %{buildroot}%{_libdir}/*.a
-
-# --disable-rpath does not seem to work correctly
-chrpath -d %{buildroot}%{_libdir}/libSDL.so
+%install -a
+# For better compatibility with "real" SDL1
+ln -s sdl12_compat.pc %{buildroot}%{_libdir}/pkgconfig/sdl.pc
 
 %files -n %{libname}
-%doc README-SDL.txt CREDITS BUGS
-%{_libdir}/libSDL-%{api}.so.%{major}*
+%{_libdir}/libSDL-%{api}.so.*
 %if %{build_plugins}
 %dir %{_libdir}/SDL
 %endif
@@ -197,13 +124,11 @@ chrpath -d %{buildroot}%{_libdir}/libSDL.so
 %endif
 
 %files -n %{devname}
-%doc README README-SDL.txt CREDITS BUGS WhatsNew docs.html
-%doc docs/html/*.html
 %{_bindir}/sdl-config
+%{_libdir}/pkgconfig/sdl12_compat.pc
 %{_libdir}/pkgconfig/sdl.pc
 %{_libdir}/*.so
+%{_libdir}/libSDLmain.a
 %dir %{_includedir}/SDL
 %{_includedir}/SDL/*.h
 %{_datadir}/aclocal/*
-%{_mandir}/*/*
-
